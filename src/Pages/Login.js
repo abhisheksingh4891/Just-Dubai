@@ -50,19 +50,6 @@ const Login = () => {
                         />
                       </div>
 
-                      <div className="form-check d-flex justify-content-start mb-4">
-                        <label className="form-check-label" for="form2Example33">
-                          <input
-                            className="form-check-input me-2"
-                            type="checkbox"
-                            value=""
-                            id="form2Example33"
-                            required
-                          />
-                          Subscribe to our newsletter
-                        </label>
-                      </div>
-
                       <button
                         type="submit"
                         data-mdb-button-init
