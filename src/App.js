@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Homepage from './Pages/Homepage';
+import Dashboard from './Components/Dashboard';
+import AppContextProvider, { AppContext } from './Context/AppContext';
+import Login from './Pages/Login';
+import Navbar from './Components/Navbar/Navbar';
+import { useContext } from 'react';
+import Register from './Pages/Register';
 
 function App() {
+
+  const { toggleSidebar} = useContext(AppContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContextProvider>
+      <div className="App">
+      <Navbar toggleSidebar={toggleSidebar} />
+        <Routes>
+          <Route path='/' element={<Homepage/>} />
+          <Route path='/admindashboard' element={<Dashboard/>} />
+          <Route path='/adminlogin' element={<Login/>} />
+          <Route path='/adminregister' element={<Register/>} />
+        </Routes>
+      </div>
+    </AppContextProvider>
   );
 }
 
