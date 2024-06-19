@@ -4,7 +4,7 @@ export const AppContext = createContext({});
 
 const AppContextProvider = (props) => {
 
-    const [adminLogin, setAdminLogin] = useState(true);
+    const [adminLogin, setAdminLogin] = useState(false);
 
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
