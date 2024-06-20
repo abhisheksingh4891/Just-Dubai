@@ -1,149 +1,195 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faGithub,
-  faGoogle,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-import React from "react";
-import { Link } from "react-router-dom";
+import { faFacebook, faGithub, faGoogle, faTwitter } from "@fortawesome/free-brands-svg-icons";
+
+const baseURL = "http://localhost:1000";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("first", first);
+      formData.append("last", last);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("phone", phone);
+      formData.append("designation", designation);
+
+      await axios.post(`${baseURL}/api/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      toast.success("Registration Successful");
+      setTimeout(() => {
+        navigate("/adminlogin");
+      }, 1000);
+    } catch (error) {
+      toast.error("Registration failed");
+      console.error("Registration Error:", error);
+    }
+  };
+
   return (
-    <div>
-      <section className="">
-        <div
-          className="px-4 py-5 px-md-5 text-center text-lg-start"
-          style={{ backgroundColor: "hsl(0, 0%, 96%)" }}
-        >
-          <div className="container">
-            <div className="row gx-lg-5 align-items-center">
-              <div className="col-lg-6 mb-5 mb-lg-0">
-                <h1 className="my-5 display-3 fw-bold ls-tight">
-                  The best offer <br />
-                  <span className="text-primary">for your business</span>
-                </h1>
-                <p style={{ color: "hsl(217, 10%, 50.8%)" }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-                  quibusdam tempora at cupiditate quis eum maiores libero
-                  veritatis? Dicta facilis sint aliquid ipsum atque?
-                </p>
-              </div>
-
-              <div className="col-lg-6 mb-5 mb-lg-0">
-                <div className="card">
-                  <div className="card-body py-5 px-md-5">
-                    <form>
-                      <div className="row">
-                        <div className="col-md-6 mb-4">
-                          <div data-mdb-input-init className="form-outline">
-                            <label className="form-label" for="form3Example1">
-                              First name
-                            </label>
-                            <input
-                              type="text"
-                              id="form3Example1"
-                              className="form-control shadow-none"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6 mb-4">
-                          <div data-mdb-input-init className="form-outline">
-                            <label className="form-label" for="form3Example2">
-                              Last name
-                            </label>
-                            <input
-                              type="text"
-                              id="form3Example2"
-                              className="form-control shadow-none"
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div data-mdb-input-init className="form-outline mb-4">
-                        <label className="form-label" for="form3Example3">
-                          Email address
+    <section className="pt-4 mt-2" style={{ backgroundColor: "#f4f5f7", fontFamily: "Raleway", minHeight: "100vh" }}>
+      <h3 className="text-center"><b>Register</b></h3>
+      <div className="container py-4">
+        <div className="row d-flex justify-content-center align-items-center">
+          <div className="col-lg-6">
+            <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
+              <div className="card-body py-5 px-md-5">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline text-start">
+                        <label className="form-label" htmlFor="firstName">
+                          First name
                         </label>
                         <input
-                          type="email"
-                          id="form3Example3"
+                          type="text"
+                          id="firstName"
+                          value={first}
+                          onChange={(e) => setFirst(e.target.value)}
                           className="form-control shadow-none"
                         />
                       </div>
-
-                      <div data-mdb-input-init className="form-outline mb-4">
-                        <label className="form-label" for="form3Example4">
-                          Password
+                    </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline text-start">
+                        <label className="form-label" htmlFor="lastName">
+                          Last name
                         </label>
                         <input
-                          type="password"
-                          id="form3Example4"
+                          type="text"
+                          id="lastName"
+                          value={last}
+                          onChange={(e) => setLast(e.target.value)}
                           className="form-control shadow-none"
                         />
                       </div>
-
-                      <button
-                        type="submit"
-                        data-mdb-button-init
-                        data-mdb-ripple-init
-                        className="btn btn-primary btn-block mb-4"
-                      >
-                        Sign up
-                      </button>
-                      <div className="pb-4">
-                        Already have an account?
-                        <Link to="/adminlogin">Login Here</Link>
-                      </div>
-
-                      <div className="text-center">
-                        <p>or sign up with:</p>
-                        <button
-                          type="button"
-                          data-mdb-button-init
-                          data-mdb-ripple-init
-                          className="btn btn-link btn-floating mx-1"
-                        >
-                          <FontAwesomeIcon className="fs-2 text-dark" icon={faFacebook} />
-                        </button>
-
-                        <button
-                          type="button"
-                          data-mdb-button-init
-                          data-mdb-ripple-init
-                          className="btn btn-link btn-floating mx-1"
-                        >
-                          <FontAwesomeIcon className="fs-2 text-dark" icon={faGoogle} />
-                        </button>
-
-                        <button
-                          type="button"
-                          data-mdb-button-init
-                          data-mdb-ripple-init
-                          className="btn btn-link btn-floating mx-1"
-                        >
-                          <FontAwesomeIcon className="fs-2 text-dark" icon={faTwitter} />
-                        </button>
-
-                        <button
-                          type="button"
-                          data-mdb-button-init
-                          data-mdb-ripple-init
-                          className="btn btn-link btn-floating mx-1"
-                        >
-                          <FontAwesomeIcon className="fs-2 text-dark" icon={faGithub} />
-                        </button>
-                      </div>
-                    </form>
+                    </div>
                   </div>
-                </div>
+
+                  <div className="form-outline mb-4 text-start">
+                    <label className="form-label" htmlFor="email">
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="form-control shadow-none"
+                    />
+                  </div>
+
+                  <div className="form-outline mb-4 text-start">
+                    <label className="form-label" htmlFor="phone">
+                      Phone Number
+                    </label>
+                    <input
+                      type="phone"
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="form-control shadow-none"
+                    />
+                  </div>
+
+                  <div className="form-outline mb-4 text-start">
+                    <label className="form-label" htmlFor="designation">
+                      Designation
+                    </label>
+                    <input
+                      type="text"
+                      id="designation"
+                      value={designation}
+                      onChange={(e) => setDesignation(e.target.value)}
+                      className="form-control shadow-none"
+                    />
+                  </div>
+
+                  <div className="form-outline mb-4 text-start">
+                    <label className="form-label" htmlFor="password">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="form-control shadow-none"
+                    />
+                  </div>
+
+                  {/* File Upload Input */}
+                  <div className="form-outline mb-4 text-start">
+                    <label className="form-label" htmlFor="image">
+                      Upload Image
+                    </label>
+                    <input
+                      type="file"
+                      id="image"
+                      accept=".jpg, .jpeg, .png"
+                      onChange={handleImageChange}
+                      className="form-control shadow-none"
+                    />
+                  </div>
+
+                  <div className="mb-4 text-start">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Sign up
+                    </button>
+                  </div>
+
+                  <div className="pb-4 text-start">
+                    Already have an account? <Link to="/adminlogin">Login Here</Link>
+                  </div>
+
+                  <div className="text-center">
+                    <p>or sign up with:</p>
+                    <button type="button" className="btn btn-link btn-floating mx-1">
+                      <FontAwesomeIcon className="fs-2 text-dark" icon={faFacebook} />
+                    </button>
+                    <button type="button" className="btn btn-link btn-floating mx-1">
+                      <FontAwesomeIcon className="fs-2 text-dark" icon={faGoogle} />
+                    </button>
+                    <button type="button" className="btn btn-link btn-floating mx-1">
+                      <FontAwesomeIcon className="fs-2 text-dark" icon={faTwitter} />
+                    </button>
+                    <button type="button" className="btn btn-link btn-floating mx-1">
+                      <FontAwesomeIcon className="fs-2 text-dark" icon={faGithub} />
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+      <ToastContainer />
+    </section>
   );
 };
 

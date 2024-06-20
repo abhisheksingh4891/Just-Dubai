@@ -1,0 +1,31 @@
+/* Navbar.css */
+
+/* Override Bootstrap's hover effect for dropdown toggle */
+.no-hover:hover {
+    background-color: transparent !important; /* Ensure background remains transparent on hover */
+    color: rgb(0, 55, 255) !important; 
+    font-weight: 800;
+  }
+
+  /* Example Navbar.css styles */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-brand img {
+  display: block;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ccc;
+}
+
+  

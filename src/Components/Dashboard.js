@@ -6,7 +6,7 @@ import TotalPosts from './TotalPosts';
 
 const Dashboard = () => {
   return (
-    <div className="container mt-4" style={{height: "100vh"}}>
+    <div className="container p-3">
       <div className="row">
         <div className="col-md-4 mb-4">
           <div className="card">
@@ -31,6 +31,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Dashboard;

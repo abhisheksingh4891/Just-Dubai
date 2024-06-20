@@ -1,5 +1,7 @@
 .change :hover{
   background-color: RGB(97, 206, 247,0.3);
+  color: rgb(0, 55, 255) !important; 
+  font-weight: 800;
 }
 
 .dropdown-toggle{
@@ -8,11 +10,15 @@
 
 .dropdown-toggle:hover {
   background-color: RGBA(97, 206, 247,0.3);
+  color: rgb(0, 55, 255) !important; 
+  font-weight: 800;
 }
 
 .itemhover :hover{
   background-color:RGBA(202, 228, 238,1); 
+  color: rgb(0, 55, 255) !important; 
   border-radius: 5px;
+  font-weight: 800;
 }
 
 /* Sidebar.css */

@@ -1,20 +1,16 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBell,
-  faUser,
-  faBars,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser, faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../../Context/AppContext";
 import logo from "../../Assets/logo.png";
-import './Navbar.css'
+import './Navbar.css';
 
 const Navbar = () => {
-  const { adminLogin, toggleSidebar } = useContext(AppContext);
+  const { adminLogin, toggleSidebar, handleLogout } = useContext(AppContext);
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary p-1">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-1">
       <div className="container-fluid" style={{ fontFamily: "Raleway" }}>
         <Link className="navbar-brand" to="/">
           <img
@@ -25,17 +21,12 @@ const Navbar = () => {
         </Link>
 
         <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          onClick={toggleSidebar}
-        >
-          <FontAwesomeIcon className="fs-1" icon={faBars} />
-        </button>
+        className="navbar-toggler"
+        type="button"
+        onClick={toggleSidebar}
+      >
+        <FontAwesomeIcon className="fs-1" icon={faBars} />
+      </button>
 
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto gap-3 align-items-center">
@@ -60,48 +51,48 @@ const Navbar = () => {
                 </div>
               </div>
             </li>
-            <li className="nav-item mt-2">
-              <Link className="nav-link text-dark fs-3" to="./">
+            <li className="nav-item mt-2 ">
+              <Link className="nav-link text-light fs-3 no-hover" to="./">
                 <FontAwesomeIcon icon={faBell} />
               </Link>
             </li>
             {adminLogin ? (
               <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle text-dark fs-4 hover-none"
-                  to="#"
+                <div
+                  className="nav-link dropdown-toggle text-light fs-4 no-hover" // Apply no-hover class to remove hover effect
                   id="dropdownProfileButton"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
                   <FontAwesomeIcon icon={faUser} />
-                </Link>
+                </div>
                 <ul
-                  className="dropdown-menu dropdown-menu-end"
+                  className="dropdown-menu dropdown-menu-end mt-2"
                   aria-labelledby="dropdownProfileButton"
                 >
                   <li>
                     <Link
-                      to="/adminlogin"
-                      className="dropdown-item text-dark"
+                      to="/adminprofile"
+                      className="dropdown-item text-dark no-hover"
                     >
-                      Login
+                      My Profile
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to="/adminregister"
-                      className="dropdown-item text-dark"
+                    <div
+                      className="dropdown-item text-dark no-hover"
+                      onClick={handleLogout}
+                      style={{ cursor: "pointer" }}
                     >
-                      Register
-                    </Link>
+                      Logout
+                    </div>
                   </li>
                 </ul>
               </li>
             ) : (
               <li className="nav-item d-none">
-                <Link className="nav-link text-dark fs-3" to="./">
+                <Link className="nav-link text-light fs-3" to="./">
                   <FontAwesomeIcon icon={faUser} />
                 </Link>
               </li>
