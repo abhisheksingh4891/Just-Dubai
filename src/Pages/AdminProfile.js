@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
+import Sidebar from "../Components/Sidebar/Sidebar";
 
 const baseURL = "http://localhost:1000";
 
@@ -16,6 +17,7 @@ const AdminProfile = () => {
     email: "",
     phone: "",
     designation: "",
+    empId:"",
   });
 
   useEffect(() => {
@@ -34,13 +36,14 @@ const AdminProfile = () => {
         },
       });
       setProfile(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       setFormData({
         first: response.data.first,
         last: response.data.last,
         email: response.data.email,
         phone: response.data.phone,
         designation: response.data.designation,
+        empId: response.data.empId,
       });
     } catch (error) {
       console.error("Error fetching profile", error);
@@ -101,8 +104,8 @@ const AdminProfile = () => {
 
   return (
     <>
-      {profile ? (
-        <section className="vh-100 pt-5" style={{ backgroundColor: "#f4f5f7", fontFamily: "Raleway" }}>
+    <Sidebar />
+      {profile ? (<section className="vh-100 pt-5" style={{ backgroundColor: "#f4f5f7"}}>
         <h3 className="text-center"><b>Your Profile</b></h3>
           <div className="container-fluid py-3">
             <div className="row d-flex justify-content-center align-items-center">
@@ -122,8 +125,8 @@ const AdminProfile = () => {
                         className="img-fluid my-4"
                         style={{ width: "200px", borderRadius: "50%" }}
                       />
-                      <h5 className="text-dark">{profile.first + " " + profile.last}</h5>
-                      <p className="text-dark">{profile.designation}</p>
+                      <h5 className="text-dark" style={{fontFamily: "Raleway"}}><b>{profile.first + " " + profile.last}</b></h5>
+                      <p className="text-dark"><b>Employee Id :</b> {profile.empId}</p>
                       {!editMode && (
                         <Link><FontAwesomeIcon
                           className="mb-5 text-dark"
@@ -133,7 +136,7 @@ const AdminProfile = () => {
                         /></Link>
                       )}
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-8" style={{fontFamily: "Raleway"}}>
                       <div className="card-body p-4">
                         {!editMode ? (
                           <>
@@ -262,6 +265,7 @@ const AdminProfile = () => {
             </div>
           </div>
         </section>
+        
       ) : (
         <div className="text-center py-5">
           <div className="spinner-border" role="status">

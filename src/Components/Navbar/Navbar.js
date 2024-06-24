@@ -1,16 +1,29 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faUser, faBars, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../../Context/AppContext";
 import logo from "../../Assets/logo.png";
 import './Navbar.css';
+import { ToastContainer, toast } from "react-toastify";
 
 const Navbar = () => {
-  const { adminLogin, toggleSidebar, handleLogout } = useContext(AppContext);
+  const { adminLogin, toggleSidebar, setAdminLogin } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await localStorage.removeItem("admin");
+    toast.error("User Logged Out")
+    setTimeout(() => {
+        setAdminLogin(false);
+        navigate('/');
+    }, 1000);
+};
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light p-1" style={{backgroundColor:"#1167b1"}}>
       <div className="container-fluid" style={{ fontFamily: "Raleway" }}>
         <Link className="navbar-brand" to="/">
           <img
@@ -21,7 +34,7 @@ const Navbar = () => {
         </Link>
 
         <button
-        className="navbar-toggler"
+        className="navbar-toggler text-light"
         type="button"
         onClick={toggleSidebar}
       >
@@ -31,25 +44,25 @@ const Navbar = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto gap-3 align-items-center">
             <li className="nav-item">
-              <div className="d-flex align-items-center position-relative mt-1">
-                <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Search"
-                  style={{ width: "300px" }}
-                />
-                <div
-                  className="text-dark position-absolute"
-                  style={{
-                    right: "10px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    cursor: "pointer",
-                  }}
-                >
-                  <FontAwesomeIcon icon={faSearch} />
-                </div>
-              </div>
+                {/* <div className="d-flex align-items-center position-relative mt-1">
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Search"
+                    style={{ width: "300px" }}
+                  />
+                  <div
+                    className="text-dark position-absolute"
+                    style={{
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faSearch} />
+                  </div>
+                </div> */}
             </li>
             <li className="nav-item mt-2 ">
               <Link className="nav-link text-light fs-3 no-hover" to="./">
@@ -70,18 +83,19 @@ const Navbar = () => {
                 <ul
                   className="dropdown-menu dropdown-menu-end mt-2"
                   aria-labelledby="dropdownProfileButton"
+                  style={{  backgroundColor:"rgb(222, 223, 223)"}}
                 >
-                  <li>
+                  <li className="change px-2">
                     <Link
                       to="/adminprofile"
-                      className="dropdown-item text-dark no-hover"
+                      className="dropdown-item text-dark fw-bold rounded"
                     >
                       My Profile
                     </Link>
                   </li>
-                  <li>
+                  <li className="change px-2">
                     <div
-                      className="dropdown-item text-dark no-hover"
+                      className="dropdown-item text-dark fw-bold rounded"
                       onClick={handleLogout}
                       style={{ cursor: "pointer" }}
                     >
@@ -101,6 +115,8 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+      <ToastContainer />
+    </>
   );
 };
 

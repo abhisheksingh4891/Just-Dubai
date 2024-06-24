@@ -1,10 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export const AppContext = createContext({});
 
 const AppContextProvider = (props) => {
-    const navigate = useNavigate();
+    
 
     const [adminLogin, setAdminLogin] = useState(false);
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -20,11 +19,6 @@ const AppContextProvider = (props) => {
         }
     }, []);
 
-    const handleLogout = async () => {
-        await localStorage.removeItem("admin");
-        setAdminLogin(false);
-        navigate('/');
-    };
 
     const contextValue = {
         adminLogin,
@@ -32,7 +26,7 @@ const AppContextProvider = (props) => {
         isSidebarVisible,
         setIsSidebarVisible,
         toggleSidebar,
-        handleLogout
+        
     };
 
     return (

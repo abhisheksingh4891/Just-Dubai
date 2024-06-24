@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "../Context/AppContext";
+import { AppContext } from "../../Context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
@@ -18,16 +18,17 @@ const Login = () => {
     if (adminLogin) {
       navigate("/");
     }
-  });
+  }, [adminLogin, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      toast.info("Checking User Data")
       const response = await axios.post(`${baseURL}/api/login`, {
         email,
         password,
       });
-      toast.success("Login Successfull");
+      toast.success("Login Successful");
       localStorage.setItem("admin", response.data.token);
       setTimeout(() => {
         setAdminLogin(true);
@@ -46,7 +47,13 @@ const Login = () => {
       <section className="py-0">
         <div
           className="px-2 px-md-5 text-center text-lg-start"
-          style={{ backgroundColor: "#f4f5f7", fontFamily: "Raleway", minHeight: "100vh" }}
+          style={{
+            backgroundColor: "#f4f5f7",
+            fontFamily: "Raleway",
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center"
+          }}
         >
           <div className="container">
             <div className="row gx-lg-5 align-items-center">
@@ -69,11 +76,8 @@ const Login = () => {
               <div className="col-lg-6 mb-5 mb-lg-0">
                 <div className="card">
                   <div className="card-body py-5 px-md-5">
-                    <form onSubmit={handleSubmit}>
-                      <div
-                        data-mdb-input-init
-                        className="form-outline mb-4 text-start"
-                      >
+                    <form onSubmit={handleSubmit} className="px-1">
+                      <div className="form-outline mb-4 text-start">
                         <label className="form-label" htmlFor="form3Example3">
                           Email address
                         </label>
@@ -83,13 +87,11 @@ const Login = () => {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           className="form-control shadow-none"
+                          required
                         />
                       </div>
 
-                      <div
-                        data-mdb-input-init
-                        className="form-outline mb-4 text-start"
-                      >
+                      <div className="form-outline mb-4 text-start">
                         <label className="form-label" htmlFor="form3Example4">
                           Password
                         </label>
@@ -99,14 +101,13 @@ const Login = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="form-control shadow-none"
+                          required
                         />
                       </div>
 
                       <div className="text-start">
                         <button
                           type="submit"
-                          data-mdb-button-init
-                          data-mdb-ripple-init
                           className="btn btn-primary mb-4"
                         >
                           Log in
