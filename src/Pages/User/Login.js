@@ -14,7 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [forgot, setForgot] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState(null); // State to hold reCAPTCHA response
+  const [captchaValue, setCaptchaValue] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,10 +70,6 @@ const Login = () => {
     e.preventDefault();
     setForgot(!forgot);
   };
-
-  function onChange(value) {
-    setCaptchaValue(value); // Set the reCAPTCHA response in state
-  }
 
   return (
     <div>
@@ -192,7 +188,7 @@ const Login = () => {
                           <div className="text-start mb-4">
                             <ReCAPTCHA
                               sitekey="6LewEwEqAAAAAPI5LkSy922omY0tKztZMYkLiq9l"
-                              onChange={onChange}
+                              onChange={(e)=> {setCaptchaValue(e)}}
                             />
                           </div>
 
