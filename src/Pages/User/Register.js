@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,10 +12,11 @@ import {
 import img1 from "../../Assets/img1.jpg";
 // import Sidebar from "../../Components/Sidebar/Sidebar";
 
-const baseURL = "http://localhost:1000";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Register = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
@@ -33,6 +34,19 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(password.length)
+
+    if (password.length < 8) {
+      toast.error("Password should be minimum 8 characters long");
+      return;
+    }
+
+    if (empId.length !== 4) {
+      toast.error("Employee ID should be exactly 4 characters long");
+      return;
+    }
+  
     try {
       const formData = new FormData();
       formData.append("image", image);
@@ -43,14 +57,14 @@ const Register = () => {
       formData.append("phone", phone);
       formData.append("designation", designation);
       formData.append("empId", empId);
-
+  
       await axios.post(`${baseURL}/api/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      toast.success("User added successful");
+  
+      toast.success("User added successfully");
       setTimeout(() => {
         // navigate("/");
         window.close();
@@ -60,6 +74,7 @@ const Register = () => {
       console.error("Registration Error:", error);
     }
   };
+  
 
   return (
     <>

@@ -4,7 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import Sidebar from "../../Sidebar/Sidebar";
 
-const baseURL = "http://localhost:1000";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const BuisnessNews = () => {
   const navigate = useNavigate();

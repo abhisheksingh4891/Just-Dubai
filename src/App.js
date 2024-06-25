@@ -4,9 +4,9 @@ import Homepage from './Pages/Homepage';
 import Dashboard from './Components/Dashboard';
 import AppContextProvider from './Context/AppContext';
 import Navbar from './Components/Navbar/Navbar';
-import PageViews from './Pages/PageViews';
+// import PageViews from './Pages/PageViews';
 import AdminProfile from './Pages/AdminProfile';
-import PostUpload from './Pages/PostUpload';
+// import PostUpload from './Pages/PostUpload';
 // import Footer from './Components/Footer';
 import Festival from './Components/PostUpload/AboutDubai/Sections/Festival';
 import AboutDubaiPage from './Pages/PostUpload/AboutDubaiPage';
@@ -46,10 +46,10 @@ function App() {
                     <Route path='/admindashboard' element={<Dashboard />} />
                     <Route path='/adminlogin' element={<Login />} />
                     <Route path='/adminregister' element={<Register />} />
-                    <Route path='/pageviews' element={<PageViews />} />
+                    {/* <Route path='/pageviews' element={<PageViews />} /> */}
                     <Route path='/adminProfile' element={<AdminProfile />} />
                     <Route path='/removeuser' element={<RemoveUser />} />
-                    <Route path='/postUpload' element={<PostUpload />} />
+                    
 
                     {/* about dubai menu */}
                     <Route path='/aboutdubaipage' element={<AboutDubaiPage />} />

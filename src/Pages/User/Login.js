@@ -4,7 +4,8 @@ import { AppContext } from "../../Context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
-const baseURL = "http://localhost:1000";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Login = () => {
   const { adminLogin, setAdminLogin } = useContext(AppContext);

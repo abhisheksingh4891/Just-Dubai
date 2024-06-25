@@ -4,7 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { confirmAlert } from 'react-confirm-alert';
 // import Sidebar from "../../Components/Sidebar/Sidebar";
 
-const baseURL = "http://localhost:1000";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const RemoveUser = () => {
   const [userProfile, setUserProfile] = useState([]);
@@ -17,13 +18,9 @@ const RemoveUser = () => {
     phone: "",
     email: "",
     designation: "",
-    empId:"",
   });
 
-  useEffect(() => {
-    getData();
-  }, []);
-
+  
   const getData = async () => {
     try {
       const response = await axios.get(`${baseURL}/api/user/data`);
@@ -35,6 +32,11 @@ const RemoveUser = () => {
       setLoading(false);
     }
   };
+  
+  useEffect(() => {
+    getData();
+  }, []);
+
 
   const handleRemove = (userId) => {
     confirmAlert({
@@ -52,6 +54,8 @@ const RemoveUser = () => {
       ]
     });
   };
+
+
 
   const removeUser = async (userId) => {
     try {
@@ -110,6 +114,23 @@ const RemoveUser = () => {
     }
   };
 
+  const handleEditConfirm = (userId) => {
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure you want to change the details?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => handleSaveEdit(userId)
+        },
+        {
+          label: 'No',
+          onClick: () => toast.info("User not removed")
+        }
+      ]
+    });
+  };
+
   const handleCancelEdit = () => {
     setEdit(false);
     setSelectedUserId(null);
@@ -147,7 +168,7 @@ const RemoveUser = () => {
                 <tbody>
                   {userProfile.map((user, index) => (
                     <tr key={index}>
-                    <td>
+                    <td className="fs-5" style={{fontFamily:"none"}}>
                           {user.empId}
                       </td>
                       <td>
@@ -220,7 +241,7 @@ const RemoveUser = () => {
                           <>
                             <button
                               className="btn btn-primary me-2"
-                              onClick={() => handleSaveEdit(user._id)}
+                              onClick={() => handleEditConfirm(user._id)}
                             >
                               Save
                             </button>

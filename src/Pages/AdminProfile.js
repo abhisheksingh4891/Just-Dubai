@@ -6,7 +6,8 @@ import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-
 import { Link } from "react-router-dom";
 import Sidebar from "../Components/Sidebar/Sidebar";
 
-const baseURL = "http://localhost:1000";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const AdminProfile = () => {
   const [profile, setProfile] = useState(null); 
