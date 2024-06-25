@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { confirmAlert } from 'react-confirm-alert';
-// import Sidebar from "../../Components/Sidebar/Sidebar";
+import { AppContext } from "../../Context/AppContext";
+import Sidebar from "../../Components/Sidebar/Sidebar";
 
 // const baseURL = "http://localhost:1000";
 const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const RemoveUser = () => {
+
+  const { isSidebarVisible } = useContext(AppContext);
+
   const [userProfile, setUserProfile] = useState([]);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
@@ -139,7 +143,14 @@ const RemoveUser = () => {
   return (
     <div>
       {/* <Sidebar /> */}
-      <div style={{ backgroundColor: "#f4f5f7", fontFamily: "Raleway" }}>
+      
+    <div className="container-fluid px-0 d-flex flex-column min-vh-100" style={{ backgroundColor: "rgba(232, 235, 231)" }}>
+      <div className="row flex-grow-1 mx-0">
+        <div className={`col-13 col-md-3 px-0 position-relative ${isSidebarVisible ? 'd-block' : 'd-none d-md-block'}`} style={{ transition: "all 0.3s" }}>
+          <Sidebar isVisible={isSidebarVisible} />
+        </div>
+        <div className="col px-0 pb-2">
+        <div style={{ backgroundColor: "rgba(232, 235, 231)" , fontFamily: "Raleway" }}>
         <div className="container">
           <h3 className="text-center pt-5 mb-4">
             <b>Active Users</b>
@@ -153,7 +164,7 @@ const RemoveUser = () => {
             </div>
           ) : (
             <div className="table-responsive" >
-              <table className="table table-bordered table-striped">
+              <table className="table table-bordered">
                 <thead>
                   <tr>
                     <th>Employee ID</th>
@@ -168,7 +179,7 @@ const RemoveUser = () => {
                 <tbody>
                   {userProfile.map((user, index) => (
                     <tr key={index}>
-                    <td className="fs-5" style={{fontFamily:"none"}}>
+                    <td>
                           {user.empId}
                       </td>
                       <td>
@@ -278,6 +289,9 @@ const RemoveUser = () => {
         </div>
       </div>
       <ToastContainer />
+    </div>
+        </div>
+      </div>
     </div>
   );
 };

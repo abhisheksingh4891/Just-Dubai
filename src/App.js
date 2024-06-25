@@ -7,7 +7,7 @@ import Navbar from './Components/Navbar/Navbar';
 // import PageViews from './Pages/PageViews';
 import AdminProfile from './Pages/AdminProfile';
 // import PostUpload from './Pages/PostUpload';
-// import Footer from './Components/Footer';
+import Footer from './Components/Footer';
 import Festival from './Components/PostUpload/AboutDubai/Sections/Festival';
 import AboutDubaiPage from './Pages/PostUpload/AboutDubaiPage';
 import Culture from './Components/PostUpload/AboutDubai/Sections/Culture';
@@ -35,12 +35,13 @@ import WorldPage from './Pages/PostUpload/News/WorldPage';
 import BuisnessPage from './Pages/PostUpload/News/BuisnessPage';
 import LegalPage from './Pages/PostUpload/News/LegalPage';
 import SportsPage from './Pages/PostUpload/News/SportsPage';
+import ResetPassword from './Pages/User/ResetPassword';
 
 function App() {
     return (
         <AppContextProvider>
             <Navbar />
-            <div className="App">
+            <div className="App" >
                 <Routes>
                     <Route path='/' element={<Homepage />} />
                     <Route path='/admindashboard' element={<Dashboard />} />
@@ -49,6 +50,7 @@ function App() {
                     {/* <Route path='/pageviews' element={<PageViews />} /> */}
                     <Route path='/adminProfile' element={<AdminProfile />} />
                     <Route path='/removeuser' element={<RemoveUser />} />
+                    <Route path='/reset-password/:token' element={<ResetPassword />} />
                     
 
                     {/* about dubai menu */}
@@ -91,7 +93,7 @@ function App() {
                     {/*  menu */}
                 </Routes>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </AppContextProvider>
     );
 }

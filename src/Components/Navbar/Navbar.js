@@ -6,6 +6,7 @@ import { AppContext } from "../../Context/AppContext";
 import logo from "../../Assets/logo.png";
 import './Navbar.css';
 import { ToastContainer, toast } from "react-toastify";
+import img1 from "../../Assets/img1.jpg";
 
 const Navbar = () => {
   const { adminLogin, toggleSidebar, setAdminLogin } = useContext(AppContext);
@@ -23,7 +24,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light p-1" style={{backgroundColor:"#1167b1"}}>
+      <nav className="navbar navbar-expand-lg navbar-light p-1" style={{ backgroundImage: `url(${img1})`}}>
       <div className="container-fluid" style={{ fontFamily: "Raleway" }}>
         <Link className="navbar-brand" to="/">
           <img
@@ -41,10 +42,8 @@ const Navbar = () => {
         <FontAwesomeIcon className="fs-1" icon={faBars} />
       </button>
 
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ms-auto gap-3 align-items-center">
-            <li className="nav-item">
-                {/* <div className="d-flex align-items-center position-relative mt-1">
+            {/* <li className="nav-item">
+                <div className="d-flex align-items-center position-relative mt-1">
                   <input
                     className="form-control"
                     type="text"
@@ -62,14 +61,16 @@ const Navbar = () => {
                   >
                     <FontAwesomeIcon icon={faSearch} />
                   </div>
-                </div> */}
-            </li>
+                </div>
+            </li> */}
+            {adminLogin ? (
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav ms-auto gap-3 align-items-center">
             <li className="nav-item mt-2 ">
               <Link className="nav-link text-light fs-3 no-hover" to="./">
                 <FontAwesomeIcon icon={faBell} />
               </Link>
             </li>
-            {adminLogin ? (
               <li className="nav-item dropdown">
                 <div
                   className="nav-link dropdown-toggle text-light fs-4 no-hover" // Apply no-hover class to remove hover effect
@@ -104,6 +105,8 @@ const Navbar = () => {
                   </li>
                 </ul>
               </li>
+              </ul>
+            </div>
             ) : (
               <li className="nav-item d-none">
                 <Link className="nav-link text-light fs-3" to="./">
@@ -111,8 +114,6 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
-          </ul>
-        </div>
       </div>
     </nav>
       <ToastContainer />

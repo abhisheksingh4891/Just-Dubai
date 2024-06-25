@@ -1,15 +1,18 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import Sidebar from "../Components/Sidebar/Sidebar";
+import { AppContext } from "../Context/AppContext";
 
 // const baseURL = "http://localhost:1000";
 const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const AdminProfile = () => {
+  const { isSidebarVisible } = useContext(AppContext);
+
   const [profile, setProfile] = useState(null); 
   const [editMode, setEditMode] = useState(false); 
   const [formData, setFormData] = useState({
@@ -104,13 +107,21 @@ const AdminProfile = () => {
   };
 
   return (
-    <>
-    <Sidebar />
-      {profile ? (<section className="vh-100 pt-5" style={{ backgroundColor: "#f4f5f7"}}>
-        <h3 className="text-center"><b>Your Profile</b></h3>
+   
+    <div className="container-fluid px-0 d-flex flex-column min-vh-100" style={{ backgroundColor: "rgba(232, 235, 231)" }}>
+      <div className="row flex-grow-1 mx-0">
+        <div className={`col-12 col-md-2 px-0 position-relative ${isSidebarVisible ? 'd-block' : 'd-none d-md-block'}`} style={{ transition: "all 0.3s" }}>
+          <Sidebar isVisible={isSidebarVisible}/>
+        </div>
+        <div className="col px-0 pb-2">
+        <>
+      {
+        profile ? (
+        <section className="h-100 pt-5" style={{ backgroundColor: "#f4f5f7"}}>
+        <h3 className="text-center" style={{fontFamily: "Raleway"}}><b>Your Profile</b></h3>
           <div className="container-fluid py-3">
             <div className="row d-flex justify-content-center align-items-center">
-              <div className="col-lg-6 mb-4 mb-lg-0">
+              <div className="col-lg-7 mb-4 mb-lg-0">
                 <div className="card mb-3" style={{ borderRadius: ".5rem" }}>
                   <div className="row g-0">
                     <div className="col-md-4 gradient-custom text-center text-white"
@@ -276,6 +287,9 @@ const AdminProfile = () => {
         </div>
       )}
     </>
+        </div>
+      </div>
+    </div>
   );
 };
 

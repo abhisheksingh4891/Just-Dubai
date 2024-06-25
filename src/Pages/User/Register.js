@@ -9,7 +9,7 @@ import {
   faGoogle,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import img1 from "../../Assets/img1.jpg";
+// import img1 from "../../Assets/img1.jpg";
 // import Sidebar from "../../Components/Sidebar/Sidebar";
 
 // const baseURL = "http://localhost:1000";
@@ -35,7 +35,13 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(password.length)
+    // const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    const localPart = email.split('@')[0];
+
+    if (!/^[a-zA-Z0-9]+$/.test(localPart)) {
+      toast.error("Email should contain only alphabets and numbers");
+      return;
+    }
 
     if (password.length < 8) {
       toast.error("Password should be minimum 8 characters long");
@@ -46,6 +52,8 @@ const Register = () => {
       toast.error("Employee ID should be exactly 4 characters long");
       return;
     }
+
+    toast.info("Saving user data...Please Wait!")
   
     try {
       const formData = new FormData();
@@ -82,15 +90,15 @@ const Register = () => {
       <section
         className="pt-4 w-100"
         style={{
-          backgroundColor: "#f4f5f7",
+          // backgroundColor: "#f4f5f7",
           fontFamily: "Raleway",
           minHeight: "100vh",
           position: "absolute",
-          backgroundImage: `url(${img1})`,
-          // backgroundColor:"rgb(0,0,128)"
+          // backgroundImage: `url(${img1})`,
+          backgroundColor: "rgba(232, 235, 231)"
         }}
       >
-        <h3 className="text-center text-light">
+        <h3 className="text-center">
           <b>Add User</b>
         </h3>
         <div className="container py-4">

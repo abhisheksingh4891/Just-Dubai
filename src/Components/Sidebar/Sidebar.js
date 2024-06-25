@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../../Context/AppContext";
 // import logo from "../../Assets/logo.png";
-import img1 from "../../Assets/img1.jpg";
+
 
 import "./Sidebar.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -34,7 +34,7 @@ const Sidebar = () => {
         width: "300px",
         position: "absolute",
         zIndex: 1000,
-        backgroundImage: `url(${img1})`,
+        backgroundColor:"#0A81F1"
         // backgroundColor:"rgb(0,0,128)"
       }}
     >
@@ -51,8 +51,8 @@ const Sidebar = () => {
       </div>
       </nav> */}
         <div className="d-flex flex-column">
-          <h3 className="mb-1 fs-5 text-danger text-start px-3 pt-3">
-            Dashboard
+          <h3 className="mb-1 fs-5 text-start px-3 pt-3">
+            Admin Panel
           </h3>
           <ul className="nav flex-column">
             <li className="nav-item">
@@ -61,7 +61,7 @@ const Sidebar = () => {
                   className="btn w-100 text-light d-flex align-items-center gap-3 p-3 border-0"
                   style={{ height: "50px" }}
                 >
-                  <FontAwesomeIcon className="text-danger" icon={faHouse} />
+                  <FontAwesomeIcon icon={faHouse} />
                   Dashboard
                 </button>
               </Link>
@@ -69,7 +69,7 @@ const Sidebar = () => {
           </ul>
 
           <div className="mb-1 px-3 pt-3">
-            <h3 className="fs-5 text-danger text-start">Pages</h3>
+            <h3 className="fs-5 text-start">Pages</h3>
             <h3 className="text-start" style={{ fontSize: "0.75rem" }}>
               Prebuilt Pages
             </h3>
