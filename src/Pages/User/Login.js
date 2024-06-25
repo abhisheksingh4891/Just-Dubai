@@ -191,7 +191,7 @@ const Login = () => {
 
                           <div className="text-start mb-4">
                             <ReCAPTCHA
-                              sitekey="6LfcDAEqAAAAAC28X6sv4EeVYIRMQ3OTKOrAZ_Xi"
+                              sitekey="6LewEwEqAAAAAPI5LkSy922omY0tKztZMYkLiq9l"
                               onChange={onChange}
                             />
                           </div>
