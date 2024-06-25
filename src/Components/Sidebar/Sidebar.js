@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../../Context/AppContext";
@@ -7,9 +7,22 @@ import { AppContext } from "../../Context/AppContext";
 import img1 from "../../Assets/img1.jpg";
 
 import "./Sidebar.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const Sidebar = () => {
-  const { adminLogin, isSidebarVisible } = useContext(AppContext);
+  const { adminLogin, isSidebarVisible, setAdminLogin } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await localStorage.removeItem("admin");
+    toast.error("User Logged Out")
+    setTimeout(() => {
+        setAdminLogin(false);
+        navigate('/');
+    }, 1000);
+};
+
 
   return (
     <div
@@ -174,6 +187,12 @@ const Sidebar = () => {
                     </ul>
                   </div>
                 </li>
+                <li className="nav-item text-start p-3">       
+                    <button className="btn btn-danger" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  
+                </li>
               </>
             ) : (
               <li className="nav-item text-start ms-2">
@@ -214,6 +233,7 @@ const Sidebar = () => {
           </ul>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

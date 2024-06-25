@@ -114,10 +114,10 @@ const Login = () => {
                           Log in
                         </button>
                       </div>
-                      <div className="pb-4 text-start">
+                      {/* <div className="pb-4 text-start">
                         Already have an account?{" "}
                         <Link to="/adminregister">Register Here</Link>
-                      </div>
+                      </div> */}
                     </form>
                   </div>
                 </div>
