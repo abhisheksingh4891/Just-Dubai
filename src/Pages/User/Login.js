@@ -5,8 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 
-// const baseURL = "http://localhost:1000";
-const baseURL = "https://just-dubai-admin-backend.onrender.com";
+const baseURL = "http://localhost:1000";
+// const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Login = () => {
   const { adminLogin, setAdminLogin } = useContext(AppContext);
@@ -14,7 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [forgot, setForgot] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState(null); 
+  const [captchaValue, setCaptchaValue] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,29 +26,30 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!captchaValue) {
+    
+    if (!captchaValue && email.length>2 && password.length>2) {
       toast.error("Please complete the reCAPTCHA verification.");
       return;
     }
-
     try {
-      toast.info("Checking User Data");
       const response = await axios.post(`${baseURL}/api/login`, {
         email,
         password,
-        captchaValue, 
+        captchaValue,
       });
-      toast.success("Login Successful");
+      toast.info("Checking User Data");
+      toast.success(response.data.message);
       localStorage.setItem("admin", response.data.token);
       setTimeout(() => {
         setAdminLogin(true);
       }, 1000);
     } catch (error) {
-      toast.error("Login Failed");
-      console.log(
-        "Error logging in:",
-        error.response ? error.response.data : error.message
+      toast.error(
+        error.response
+          ? error.response.data.message
+          : "Something went wrong. Please try again."
       );
+      console.log("Error logging in:", error.response || error.message);
     }
   };
 
@@ -75,47 +76,29 @@ const Login = () => {
     <div>
       <section className="py-0">
         <div
-          className="px-2 px-md-5 text-center text-lg-start"
+          className="d-flex justify-content-center align-items-center text-center text-lg-start"
           style={{
-            backgroundColor: "#f4f5f7",
+            // backgroundColor: "#f4f5f7",
             fontFamily: "Raleway",
             minHeight: "100vh",
-            display: "flex",
-            alignItems: "center",
           }}
         >
           <div className="container">
-            <div className="row gx-lg-5 align-items-center">
-              <div className="col-lg-6 mb-4 mb-lg-0">
-                <h1 className="my-5 display-3 fw-bold ls-tight text-start text-lg-start">
-                  The best offer <br />
-                  <span className="text-primary">for your business</span>
-                </h1>
-                <p
-                  className="text-start text-lg-start"
-                  style={{ color: "hsl(217, 10%, 50.8%)" }}
-                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-                  quibusdam tempora at cupiditate quis eum maiores libero
-                  veritatis? Dicta facilis sint aliquid ipsum atque?
-                </p>
-              </div>
-
-              <div className="col-lg-6 mb-5 mb-lg-0">
+            <div className="row justify-content-center align-items-center">
+              <div className="col-lg-6 col-md-8 col-sm-10 mb-5">
                 <div className="card">
                   <div className="card-body py-4 px-md-5">
                     {forgot ? (
                       <>
                         <form onSubmit={handleForget}>
-                          <h3 className="text-start">Forgot Password ?</h3>
+                          <h4 className="text-start">Forgot Password</h4>
                           <div className="form-outline mb-4 text-start pt-2">
-                            <label
+                            {/* <label
                               className="form-label"
                               htmlFor="form3Example30"
                             >
                               Email address
-                            </label>
+                            </label> */}
                             <input
                               type="email"
                               id="form3Example30"
@@ -123,11 +106,11 @@ const Login = () => {
                               onChange={(e) => setEmail(e.target.value)}
                               className="form-control shadow-none"
                               placeholder="Enter your email here"
-                              required
+                              
                             />
                           </div>
                           <p className="text-start">
-                            Enter your email to reset password here.
+                            Enter your email to recieve reset password link.
                           </p>
 
                           <div className="text-start">
@@ -164,7 +147,7 @@ const Login = () => {
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               className="form-control shadow-none"
-                              required
+                              
                             />
                           </div>
 
@@ -181,14 +164,14 @@ const Login = () => {
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                               className="form-control shadow-none"
-                              required
+                              
                             />
                           </div>
 
                           <div className="text-start mb-4">
                             <ReCAPTCHA
                               sitekey="6LewEwEqAAAAAPI5LkSy922omY0tKztZMYkLiq9l"
-                              onChange={(e)=> {setCaptchaValue(e)}}
+                              onChange={(e) => setCaptchaValue(e)}
                             />
                           </div>
 

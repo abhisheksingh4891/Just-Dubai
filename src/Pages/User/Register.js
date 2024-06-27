@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,15 +8,15 @@ import {
   faGithub,
   faGoogle,
   faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+} from "@fortawesome/free-brands-svg-icons"
 // import img1 from "../../Assets/img1.jpg";
 // import Sidebar from "../../Components/Sidebar/Sidebar";
 
-// const baseURL = "http://localhost:1000";
-const baseURL = "https://just-dubai-admin-backend.onrender.com";
+const baseURL = "http://localhost:1000";
+// const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Register = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [first, setFirst] = useState("");
   const [last, setLast] = useState("");
@@ -26,6 +26,7 @@ const Register = () => {
   const [designation, setDesignation] = useState("");
   const [empId, setEmpId] = useState("");
   const [image, setImage] = useState(null);
+  const [superAdmin, setSuperAdmin] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -36,25 +37,24 @@ const Register = () => {
     e.preventDefault();
 
     // const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    const localPart = email.split('@')[0];
+    // const localPart = email.split("@")[0];
 
-    if (!/^[a-zA-Z0-9]+$/.test(localPart)) {
-      toast.error("Email should contain only alphabets and numbers");
-      return;
-    }
+    // if (!/^[a-zA-Z0-9]+$/.test(localPart)) {
+    //   toast.error("Email should contain only alphabets and numbers");
+    //   return;
+    // }
 
-    if (password.length < 8) {
-      toast.error("Password should be minimum 8 characters long");
-      return;
-    }
+    // if (empId.length !== 4) {
+    //   toast.error("Employee ID should be exactly 4 characters long");
+    //   return;
+    // }
 
-    if (empId.length !== 4) {
-      toast.error("Employee ID should be exactly 4 characters long");
-      return;
-    }
+    // if (password.length < 8) {
+    //   toast.error("Password should be minimum 8 characters long");
+    //   return;
+    // }
 
-    toast.info("Saving user data...Please Wait!")
-  
+    
     try {
       const formData = new FormData();
       formData.append("image", image);
@@ -65,24 +65,29 @@ const Register = () => {
       formData.append("phone", phone);
       formData.append("designation", designation);
       formData.append("empId", empId);
-  
-      await axios.post(`${baseURL}/api/register`, formData, {
+      formData.append("superAdmin", superAdmin)
+      
+      const response = await axios.post(`${baseURL}/api/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-  
-      toast.success("User added successfully");
+      toast.info("Saving user data...Please Wait!");
+
+      toast.success(response.data.message);
       setTimeout(() => {
-        // navigate("/");
-        window.close();
-      }, 1000);
+        navigate("/");
+      }, 800);
     } catch (error) {
-      toast.error("Registration failed");
+      if (error.response && error.response.data && error.response.data.message) {
+        toast.error(`${error.response.data.message}`);
+      } else {
+        toast.error("Registration failed");
+      }
       console.error("Registration Error:", error);
     }
+    
   };
-  
 
   return (
     <>
@@ -95,7 +100,7 @@ const Register = () => {
           minHeight: "100vh",
           position: "absolute",
           // backgroundImage: `url(${img1})`,
-          backgroundColor: "rgba(232, 235, 231)"
+          backgroundColor: "rgba(232, 235, 231)",
         }}
       >
         <h3 className="text-center">
@@ -119,7 +124,7 @@ const Register = () => {
                             value={first}
                             onChange={(e) => setFirst(e.target.value)}
                             className="form-control shadow-none"
-                            required
+                            
                           />
                         </div>
                       </div>
@@ -134,7 +139,7 @@ const Register = () => {
                             value={last}
                             onChange={(e) => setLast(e.target.value)}
                             className="form-control shadow-none"
-                            required
+                            
                           />
                         </div>
                       </div>
@@ -152,7 +157,7 @@ const Register = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="form-control shadow-none"
-                            required
+                            
                           />
                         </div>
                       </div>
@@ -167,7 +172,7 @@ const Register = () => {
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
                             className="form-control shadow-none"
-                            required
+                            
                           />
                         </div>
                       </div>
@@ -182,7 +187,7 @@ const Register = () => {
                         value={designation}
                         onChange={(e) => setDesignation(e.target.value)}
                         className="form-control shadow-none"
-                        required
+                        
                       />
                     </div>
 
@@ -196,7 +201,7 @@ const Register = () => {
                         value={empId}
                         onChange={(e) => setEmpId(e.target.value)}
                         className="form-control shadow-none"
-                        required
+                        
                       />
                     </div>
 
@@ -210,7 +215,7 @@ const Register = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="form-control shadow-none"
-                        required
+                        
                       />
                     </div>
 
@@ -225,8 +230,21 @@ const Register = () => {
                         accept=".jpg, .jpeg, .png"
                         onChange={handleImageChange}
                         className="form-control shadow-none"
-                        required
+                        
                       />
+                    </div>
+
+                    <div className="form-outline mb-4 text-start p-1 ms-3">
+                      <input
+                        type="checkbox"
+                        id="checkbox"
+                        checked={superAdmin}
+                        onChange={(e) => setSuperAdmin(e.target.checked)}
+                        className="form-check-input shadow-none"
+                      />{"   "}
+                      <label className="form-check-label" htmlFor="checkbox">
+                        Mark as SuperAdmin
+                      </label>
                     </div>
 
                     <div className="mb-4 text-start">
@@ -282,8 +300,8 @@ const Register = () => {
               </div>
             </div>
           </div>
-        </div>
         <ToastContainer />
+        </div>
       </section>
     </>
   );

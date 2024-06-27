@@ -5,9 +5,9 @@ import Dashboard from './Components/Dashboard';
 import AppContextProvider from './Context/AppContext';
 import Navbar from './Components/Navbar/Navbar';
 // import PageViews from './Pages/PageViews';
-import AdminProfile from './Pages/AdminProfile';
+import AdminProfile from './Pages/AdminComponents/AdminProfile';
 // import PostUpload from './Pages/PostUpload';
-import Footer from './Components/Footer';
+// import Footer from './Components/Footer';
 import Festival from './Components/PostUpload/AboutDubai/Sections/Festival';
 import AboutDubaiPage from './Pages/PostUpload/AboutDubaiPage';
 import Culture from './Components/PostUpload/AboutDubai/Sections/Culture';
@@ -36,64 +36,58 @@ import BuisnessPage from './Pages/PostUpload/News/BuisnessPage';
 import LegalPage from './Pages/PostUpload/News/LegalPage';
 import SportsPage from './Pages/PostUpload/News/SportsPage';
 import ResetPassword from './Pages/User/ResetPassword';
+import Sidebar from './Components/Sidebar/Sidebar';
+
 
 function App() {
+    
     return (
         <AppContextProvider>
             <Navbar />
-            <div className="App" >
-                <Routes>
-                    <Route path='/' element={<Homepage />} />
-                    <Route path='/admindashboard' element={<Dashboard />} />
-                    <Route path='/adminlogin' element={<Login />} />
-                    <Route path='/adminregister' element={<Register />} />
-                    {/* <Route path='/pageviews' element={<PageViews />} /> */}
-                    <Route path='/adminProfile' element={<AdminProfile />} />
-                    <Route path='/removeuser' element={<RemoveUser />} />
-                    <Route path='/reset-password/:token' element={<ResetPassword />} />
-                    
+            <div className="App">
+                <Sidebar />
+                <div className="content">
+                    <Routes>
+                        <Route path='/' element={<Homepage />} />
+                        <Route path='/admindashboard' element={<Dashboard />} />
+                        <Route path='/adminlogin' element={<Login />} />
+                        <Route path='/adminregister' element={<Register />} />
+                        <Route path='/adminProfile' element={<AdminProfile />} />
+                        <Route path='/removeuser' element={<RemoveUser />} />
+                        <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
 
-                    {/* about dubai menu */}
-                    <Route path='/aboutdubaipage' element={<AboutDubaiPage />} />
-                    <Route path='/festivalpage' element={<FestivalPage />} />
-                    <Route path='/attractionpage' element={<AttractionPage />} />
-                    <Route path='/interestingfactpage' element={<InterstingFactsPage />} />
-                    <Route path='/culturepage' element={<CulturePage />} />
+                        {/* About Dubai Menu */}
+                        <Route path='/aboutdubaipage' element={<AboutDubaiPage />} />
+                        <Route path='/festivalpage' element={<FestivalPage />} />
+                        <Route path='/attractionpage' element={<AttractionPage />} />
+                        <Route path='/interestingfactpage' element={<InterstingFactsPage />} />
+                        <Route path='/culturepage' element={<CulturePage />} />
 
-                    <Route path='/festival' element={<Festival />} />
-                    <Route path='/interestingfact' element={<InterestingFacts />} />
-                    <Route path='/culture' element={<Culture />} />
-                    <Route path='/attraction' element={<Attractions />} />
+                        <Route path='/festival' element={<Festival />} />
+                        <Route path='/interestingfact' element={<InterestingFacts />} />
+                        <Route path='/culture' element={<Culture />} />
+                        <Route path='/attraction' element={<Attractions />} />
 
-                    {/* news menu */}
-                    <Route path='/newspage' element={<NewsPage />} />
-                    
-                    <Route path='/middleeastnewspage' element={<MiddleEastPage />} />
-                    <Route path='/entertainmentnewspage' element={<EntertainmentPage/>} />
-                    <Route path='/dubainewspage' element={<DubaiPage/>} />
-                    <Route path='/worldnewspage' element={<WorldPage/>} />
-                    <Route path='/buisnessnewspage' element={<BuisnessPage/>} />
-                    <Route path='/legalnewspage' element={<LegalPage/>} />
-                    <Route path='/sportsnewspage' element={<SportsPage />} />
+                        {/* News Menu */}
+                        <Route path='/newspage' element={<NewsPage />} />
+                        <Route path='/middleeastnewspage' element={<MiddleEastPage />} />
+                        <Route path='/entertainmentnewspage' element={<EntertainmentPage />} />
+                        <Route path='/dubainewspage' element={<DubaiPage />} />
+                        <Route path='/worldnewspage' element={<WorldPage />} />
+                        <Route path='/buisnessnewspage' element={<BuisnessPage />} />
+                        <Route path='/legalnewspage' element={<LegalPage />} />
+                        <Route path='/sportsnewspage' element={<SportsPage />} />
 
-
-
-                    <Route path='/middleeastnews' element={<MiddleEastNews />} />
-                    <Route path='/entertainmentnews' element={<EntertainmentNews/>} />
-                    <Route path='/dubainews' element={<DubaiNews/>} />
-                    <Route path='/worldnews' element={<WorldNews/>} />
-                    <Route path='/buisnessnews' element={<BuisnessNews/>} />
-                    <Route path='/legalnews' element={<LegalNews/>} />
-                    <Route path='/sportsnews' element={<SportsNews />} />
-
-                    {/* blogs menu */}
-                    {/* entertainment menu */}
-                    {/* jobs menu */}
-                    {/* events menu */}
-                    {/*  menu */}
-                </Routes>
+                        <Route path='/middleeastnews' element={<MiddleEastNews />} />
+                        <Route path='/entertainmentnews' element={<EntertainmentNews />} />
+                        <Route path='/dubainews' element={<DubaiNews />} />
+                        <Route path='/worldnews' element={<WorldNews />} />
+                        <Route path='/buisnessnews' element={<BuisnessNews />} />
+                        <Route path='/legalnews' element={<LegalNews />} />
+                        <Route path='/sportsnews' element={<SportsNews />} />
+                    </Routes>
+                </div>
             </div>
-            <Footer />
         </AppContextProvider>
     );
 }

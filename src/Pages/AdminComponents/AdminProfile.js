@@ -1,17 +1,15 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
-import Sidebar from "../Components/Sidebar/Sidebar";
-import { AppContext } from "../Context/AppContext";
+import { ToastContainer, toast } from "react-toastify";
 
-// const baseURL = "http://localhost:1000";
-const baseURL = "https://just-dubai-admin-backend.onrender.com";
+const baseURL = "http://localhost:1000";
+// const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const AdminProfile = () => {
-  const { isSidebarVisible } = useContext(AppContext);
 
   const [profile, setProfile] = useState(null); 
   const [editMode, setEditMode] = useState(false); 
@@ -40,7 +38,6 @@ const AdminProfile = () => {
         },
       });
       setProfile(response.data);
-      // console.log(response.data);
       setFormData({
         first: response.data.first,
         last: response.data.last,
@@ -82,6 +79,7 @@ const AdminProfile = () => {
     if (!token) {
       return;
     }
+    toast.info("Please Wait")
     try {
       await axios.put(
         `${baseURL}/api/profile/update`,
@@ -92,9 +90,11 @@ const AdminProfile = () => {
           },
         }
       );
+      toast.success("Profile update successful")
       fetchProfile(); 
       setEditMode(false);
     } catch (error) {
+      toast.error("Profile update failed")
       console.error("Error updating profile", error);
     }
   };
@@ -110,8 +110,8 @@ const AdminProfile = () => {
    
     <div className="container-fluid px-0 d-flex flex-column min-vh-100" style={{ backgroundColor: "rgba(232, 235, 231)" }}>
       <div className="row flex-grow-1 mx-0">
-        <div className={`col-12 col-md-2 px-0 position-relative ${isSidebarVisible ? 'd-block' : 'd-none d-md-block'}`} style={{ transition: "all 0.3s" }}>
-          <Sidebar isVisible={isSidebarVisible}/>
+        <div className={`col-12 col-md-2 px-0 position-relative`} style={{ transition: "all 0.3s" }}>
+          {/* <Sidebar isVisible={isSidebarVisible}/> */}
         </div>
         <div className="col px-0 pb-2">
         <>
@@ -289,6 +289,7 @@ const AdminProfile = () => {
     </>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

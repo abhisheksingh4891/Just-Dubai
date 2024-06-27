@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
-import Subscribers from "./Subscribers";
-import TotalPageViews from "./TotalPageViews";
-import DailyPageViews from "./DailyPageViews";
-import TotalPosts from "./TotalPosts";
-import { AppContext } from "../Context/AppContext";
-import Sidebar from "./Sidebar/Sidebar";
+import React from "react";
+import Subscribers from "./DashboardComponents/Subscribers";
+import TotalPageViews from "./DashboardComponents/TotalPageViews";
+import DailyPageViews from "./DashboardComponents/DailyPageViews";
+import TotalPosts from "./DashboardComponents/TotalPosts";
+// import FacebookLikes from "./DashboardComponents/FacebookLikes";
+// import TwitterLikes from "./DashboardComponents/TwitterLikes";
+// import GoogleLikes from "./DashboardComponents/GoogleLikes";
+import Rating from "./DashboardComponents/Rating";
 
 const Dashboard = () => {
-  const { isSidebarVisible } = useContext(AppContext);
+ 
   return (
     <div
       className="container-fluid px-0 d-flex flex-column min-vh-100"
@@ -15,37 +17,19 @@ const Dashboard = () => {
     >
       <div className="row flex-grow-1 mx-0">
         <div
-          className={`col-12 col-md-3 px-0 position-relative ${
-            isSidebarVisible ? "d-block" : "d-none d-md-block"
-          }`}
+          className={`col-12 col-md-3 px-0 position-relative`}
           style={{ transition: "all 0.3s" }}
-        >
-          <Sidebar isVisible={isSidebarVisible} />
-        </div>
-        <div className="col px-0 pb-2">
+        ></div>
+        <div className="col px-0 pb-2 py-4 ">
           <div className="container p-3" style={{ height: "100%" }}>
             <div className="row">
-              <div className="col-md-4 mb-4">
-                <div className="card">
-                  <TotalPageViews />
-                </div>
-              </div>
-              <div className="col-md-4 mb-4">
-                <div className="card">
-                  <DailyPageViews />
-                </div>
-              </div>
-              <div className="col-md-4 mb-4">
-                <div className="card">
-                  <TotalPosts />
-                </div>
-              </div>
-              <div className="col-md-4 mb-4">
-                <div className="card">
-                  <Subscribers />
-                </div>
-              </div>
+              <TotalPageViews />
+              <DailyPageViews />
+              <TotalPosts />
+              <Subscribers />
+              <Rating />
             </div>
+            <div className="roe"></div>
           </div>
         </div>
       </div>

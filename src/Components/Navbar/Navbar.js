@@ -14,12 +14,12 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await localStorage.removeItem("admin");
     toast.error("User Logged Out")
+    await localStorage.removeItem("admin");
     setTimeout(() => {
         setAdminLogin(false);
         navigate('/');
-    }, 1000);
+    }, 800);
 };
 
   return (
@@ -66,7 +66,7 @@ const Navbar = () => {
             {adminLogin ? (
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto gap-3 align-items-center">
-            <li className="nav-item mt-2 ">
+            <li className="nav-item mt-2">
               <Link className="nav-link text-light fs-3 no-hover" to="./">
                 <FontAwesomeIcon icon={faBell} />
               </Link>
@@ -86,17 +86,25 @@ const Navbar = () => {
                   aria-labelledby="dropdownProfileButton"
                   style={{  backgroundColor:"rgb(222, 223, 223)"}}
                 >
-                  <li className="change px-2">
+                  <li className="change3 px-2">
                     <Link
                       to="/adminprofile"
-                      className="dropdown-item text-dark fw-bold rounded"
+                      className="dropdown-item  fw-bold rounded"
                     >
                       My Profile
                     </Link>
                   </li>
-                  <li className="change px-2">
+                  <li className="change3 px-2">
+                    <Link
+                      to="/settings"
+                      className="dropdown-item  fw-bold rounded"
+                    >
+                      Settings
+                    </Link>
+                  </li>
+                  <li className="change3 px-2">
                     <div
-                      className="dropdown-item text-dark fw-bold rounded"
+                      className="dropdown-item fw-bold rounded"
                       onClick={handleLogout}
                       style={{ cursor: "pointer" }}
                     >
@@ -116,7 +124,7 @@ const Navbar = () => {
             )}
       </div>
     </nav>
-      <ToastContainer />
+      <ToastContainer position="bottom-right"/>
     </>
   );
 };
