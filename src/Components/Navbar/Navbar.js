@@ -1,26 +1,15 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../../Context/AppContext";
 import logo from "../../Assets/logo.png";
 import './Navbar.css';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import img1 from "../../Assets/img1.jpg";
 
 const Navbar = () => {
-  const { adminLogin, toggleSidebar, setAdminLogin } = useContext(AppContext);
-
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    toast.error("User Logged Out")
-    await localStorage.removeItem("admin");
-    setTimeout(() => {
-        setAdminLogin(false);
-        navigate('/');
-    }, 800);
-};
+  const { adminLogin, toggleSidebar, handleLogout } = useContext(AppContext);
 
   return (
     <>

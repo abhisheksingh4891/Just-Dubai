@@ -1,27 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 const baseURL = "http://localhost:1000";
 // const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Login = () => {
-  const { adminLogin, setAdminLogin } = useContext(AppContext);
+  const { setAdminLogin } = useContext(AppContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [forgot, setForgot] = useState(false);
   const [captchaValue, setCaptchaValue] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (adminLogin) {
-      navigate("/");
-    }
-  }, [adminLogin, navigate]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,15 +26,19 @@ const Login = () => {
       toast.error("Please complete the reCAPTCHA verification.");
       return;
     }
+    if (captchaValue && email.length>=6 && password.length>=6) {
+      toast.info("Please Wait");
+    }
+
     try {
       const response = await axios.post(`${baseURL}/api/login`, {
         email,
         password,
         captchaValue,
       });
-      toast.info("Checking User Data");
       toast.success(response.data.message);
-      localStorage.setItem("admin", response.data.token);
+      // localStorage.setItem("admin", response.data.token);
+      Cookies.set("admin", response.data.token, { expires: 1 })
       setTimeout(() => {
         setAdminLogin(true);
       }, 1000);
@@ -78,7 +77,7 @@ const Login = () => {
         <div
           className="d-flex justify-content-center align-items-center text-center text-lg-start"
           style={{
-            // backgroundColor: "#f4f5f7",
+            backgroundColor: "#f4f5f7",
             fontFamily: "Raleway",
             minHeight: "100vh",
           }}
@@ -172,7 +171,9 @@ const Login = () => {
                             <ReCAPTCHA
                               sitekey="6LewEwEqAAAAAPI5LkSy922omY0tKztZMYkLiq9l"
                               onChange={(e) => setCaptchaValue(e)}
+                              className="mb-2"
                             />
+                          <label className="mb-0">Please Verify You Are a Human</label>
                           </div>
 
                           <div className="text-start">

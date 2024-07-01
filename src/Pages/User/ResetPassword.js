@@ -8,20 +8,25 @@ const baseURL = "http://localhost:1000";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { id, token } = useParams();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(password !== confirmPassword){
+      toast.error("Password don't match")
+      return;
+    }
     try {
       const response = await axios.put(
         `${baseURL}/api/users/reset-password/${id}/${token}`,
         { password }
       );
+      toast.success(response.data.message);
       setTimeout(() => {
         navigate("/");
       }, 800);
-      toast.success(response.data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -38,17 +43,36 @@ const ResetPassword = () => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="card-body px-5">
-            <p className="card-text py-2">Enter your new password</p>
-            <div className="form-outline">
+            <p className="card-text py-2"><b>Reset your password here</b></p>
+
+            <div className="form-outline mb-4 text-start">
+              <label className="form-label" htmlFor="form3Example30">
+                New Password
+              </label>
               <input
                 type="password"
-                placeholder="Enter new password"
+                // placeholder="Enter new password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="form-control my-3 shadow-none"
+                className="form-control shadow-none"
               />
             </div>
+
+            <div className="form-outline mb-4 text-start">
+              <label className="form-label" htmlFor="form3Example31">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                // placeholder="Enter new password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="form-control shadow-none"
+              />
+            </div>
+
             <button type="submit" className="btn btn-danger">
               Reset password
             </button>

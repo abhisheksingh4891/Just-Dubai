@@ -1,25 +1,13 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../../Context/AppContext";
 import "./Sidebar.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const Sidebar = () => {
-  const { adminLogin, isSidebarVisible, setAdminLogin } =
-    useContext(AppContext);
-
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await localStorage.removeItem("admin");
-    toast.error("User Logged Out");
-    setTimeout(() => {
-      setAdminLogin(false);
-      navigate("/");
-    }, 1000);
-  };
+  const { adminLogin, isSidebarVisible, handleLogout } = useContext(AppContext);
 
   return (
     <>
@@ -154,12 +142,13 @@ const Sidebar = () => {
                 </ul>
               </div>
             </li>
-            <li className="nav-item text-start p-2 itemhover">
-              <Link
-                to="/contactus"
-                className="dropdown-item text-light d-flex align-items-center gap-2 px-3 py-2"
-              >
-                Contact Us
+            <li className="nav-item text-start ms-2">
+              <Link to="/contactus" className="nav-link text-light change5">
+                <button
+                  className="btn w-100 text-start text-light border-0 p-3 shadow-none"
+                >
+                  Contact Us
+                </button>
               </Link>
             </li>
             <li className="nav-item text-start p-3">

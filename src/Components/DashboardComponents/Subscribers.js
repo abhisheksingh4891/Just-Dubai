@@ -34,7 +34,7 @@ const Subscribers = () => {
   };
 
   return (
-    <div className="col-md-4 mb-4">
+    <div className="col-md-6 col-xl-5 mb-4">
       <div className="card">
         <div className="card-header text-dark">
           <h5 className="card-title" style={{ fontFamily: "Raleway" }}>
@@ -42,7 +42,7 @@ const Subscribers = () => {
           </h5>
         </div>
         <div className="card-body">
-          <div className="px-4 pb-2" style={{ height: "200px" }}>
+          <div className="px-4 pb-2" style={{ height: "250px" }}>
             <Doughnut
               data={doughnutData}
               options={options}

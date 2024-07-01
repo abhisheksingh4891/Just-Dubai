@@ -15,14 +15,26 @@
   font-weight: 600;
 }
 
+.change5{
+  padding: unset !important;
+}
+.change5:hover {
+  background-color: #f3f3f52f;
+  color: rgb(243, 244, 246) !important; 
+  font-weight: 600 !important;
+  border-radius: 5px;
+}
+
 .change2:hover {
   background-color: #465492;
   color: rgb(243, 244, 246) !important; 
   font-weight: 600;
 }
 
+
+
 .itemhover :hover{
-  background-color: #f3f3f52f;
+  background-color: #f3f3f52f !important;
   color: rgb(243, 244, 246) !important; 
   border-radius: 5px;
   font-weight: 600;

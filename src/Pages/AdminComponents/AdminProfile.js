@@ -5,6 +5,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Cookies from 'js-cookie';
 
 const baseURL = "http://localhost:1000";
 // const baseURL = "https://just-dubai-admin-backend.onrender.com";
@@ -27,7 +28,7 @@ const AdminProfile = () => {
   }, []);
 
   const fetchProfile = async () => {
-    const token = localStorage.getItem("admin");
+    const token = Cookies.get("admin");
     if (!token) {
       return;
     }
@@ -138,7 +139,7 @@ const AdminProfile = () => {
                         style={{ width: "200px", borderRadius: "50%" }}
                       />
                       <h5 className="text-dark" style={{fontFamily: "Raleway"}}><b>{profile.first + " " + profile.last}</b></h5>
-                      <p className="text-dark"><b>Employee Id :</b> {profile.empId}</p>
+                      <p className="text-dark"><b style={{fontFamily: "Raleway"}}>Employee Id :{" "}</b>{profile.empId}</p><span></span>
                       {!editMode && (
                         <Link><FontAwesomeIcon
                           className="mb-5 text-dark"
@@ -153,7 +154,7 @@ const AdminProfile = () => {
                         {!editMode ? (
                           <>
                             <h6>Information</h6>
-                            <hr className="mt-0 mb-4" />
+                            <hr className="mt-0 mb-3" style={{backgroundColor:"rgb(66, 73, 73)"}} />
                             <div className="row pt-1">
                               <div className="col-6 mb-3">
                                 <h6>First Name</h6>
@@ -174,7 +175,7 @@ const AdminProfile = () => {
                                 <p className="text-muted">{profile.phone}</p>
                               </div>
                             </div>
-                            <hr className="mt-0 mb-4" />
+                            <hr className="mt-0 mb-3" style={{backgroundColor:"rgb(66, 73, 73)"}} />
                             <div className="row pt-1">
                               <div className="col-12 mb-0">
                                 <h6>Designation</h6>
@@ -191,7 +192,7 @@ const AdminProfile = () => {
                         ) : (
                           <form onSubmit={handleSubmit}>
                             <h6>Edit Information</h6>
-                            <hr className="mt-0 mb-4" />
+                            <hr className="mt-0 mb-4" style={{backgroundColor:"rgb(66, 73, 73)"}} />
                             <div className="row pt-1">
                               <div className="col-6 mb-3">
                                 <h6>First Name</h6>
@@ -251,7 +252,7 @@ const AdminProfile = () => {
                                 />
                               </div>
                             </div>
-                            <hr className="mt-4 mb-4" />
+                            <hr className="mt-4 mb-0" />
                             <div className="d-flex justify-content-start gap-2">
                               <button
                                 type="submit"
