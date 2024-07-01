@@ -6,8 +6,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 import Cookies from 'js-cookie';
 
-const baseURL = "http://localhost:1000";
-// const baseURL = "https://just-dubai-admin-backend.onrender.com";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Login = () => {
   const { setAdminLogin } = useContext(AppContext);
