@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from 'js-cookie';
 
-const baseURL = "http://localhost:1000";
-// const baseURL = "https://just-dubai-admin-backend.onrender.com";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const AdminProfile = () => {
 
