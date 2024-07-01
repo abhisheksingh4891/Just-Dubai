@@ -22,13 +22,13 @@ const Login = () => {
     e.preventDefault();
 
     
-    if (!captchaValue && email.length>2 && password.length>2) {
-      toast.error("Please complete the reCAPTCHA verification.");
-      return;
-    }
-    if (captchaValue && email.length>=6 && password.length>=6) {
-      toast.info("Please Wait");
-    }
+    // if (!captchaValue && email.length>2 && password.length>2) {
+    //   toast.error("Please complete the reCAPTCHA verification.");
+    //   return;
+    // }
+    // if (captchaValue && email.length>=6 && password.length>=6) {
+    //   toast.info("Please Wait");
+    // }
 
     try {
       const response = await axios.post(`${baseURL}/api/login`, {
