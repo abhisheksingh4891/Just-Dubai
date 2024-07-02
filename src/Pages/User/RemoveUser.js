@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import { confirmAlert } from 'react-confirm-alert';
+import { confirmAlert } from "react-confirm-alert";
 
 const baseURL = "http://localhost:1000";
 // const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const RemoveUser = () => {
-
   const [userProfile, setUserProfile] = useState([]);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
@@ -34,38 +33,41 @@ const RemoveUser = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  });
 
   const handleRemove = (userId) => {
     confirmAlert({
-      title: 'Confirm to submit',
-      message: 'Are you sure you want to remove this user?',
+      title: "Confirm to submit",
+      message: "Are you sure you want to remove this user?",
       buttons: [
         {
-          label: 'Yes',
-          onClick: () => removeUser(userId)
+          label: "Yes",
+          onClick: () => removeUser(userId),
         },
         {
-          label: 'No',
-          onClick: () => toast.info("User not removed")
-        }
-      ]
+          label: "No",
+          onClick: () => toast.info("User not removed"),
+        },
+      ],
     });
   };
 
   const removeUser = async (userId) => {
     try {
-      const response = await axios.put(
+      await axios.put(
         `${baseURL}/api/user/deactivate/${userId}`
       );
-      if (response.status === 200) {
-        const updatedUserList = userProfile.map((user) =>
-          user._id === userId ? { ...user, active: false } : user );
-        setUserProfile(updatedUserList);
-        toast.success("User deleted successfully");
-        getData();
-      }
+
+      const updatedUserList = userProfile.map((user) =>
+        user._id === userId ? { ...user, active: false } : user
+      );
+
+      toast.dismiss();
+      toast.success("User deleted successfully");
+      setUserProfile(updatedUserList);
+      getData();
     } catch (error) {
+      toast.dismiss();
       toast.error("Failed to delete user");
       console.error("Error deactivating user:", error);
     }
@@ -94,17 +96,19 @@ const RemoveUser = () => {
 
   const handleSaveEdit = async (userId) => {
     try {
-      const response = await axios.put(
+      toast.info("Please wait")
+      await axios.put(
         `${baseURL}/api/user/update/${userId}`,
         updatedUserData
       );
-      if (response.status === 200) {
-        toast.success("User Updated Successfully");
-        setEdit(false);
-        setSelectedUserId(null);
-        getData();
-      }
+
+      toast.dismiss();
+      toast.success("User Updated Successfully");
+      setEdit(false);
+      setSelectedUserId(null);
+      getData();
     } catch (error) {
+      toast.dismiss();
       toast.error("Failed to update user");
       console.error("Error updating user:", error);
     }
@@ -112,18 +116,18 @@ const RemoveUser = () => {
 
   const handleEditConfirm = (userId) => {
     confirmAlert({
-      title: 'Confirm to submit',
-      message: 'Are you sure you want to change the details?',
+      title: "Confirm to submit",
+      message: "Are you sure you want to change the details?",
       buttons: [
         {
-          label: 'Yes',
-          onClick: () => handleSaveEdit(userId)
+          label: "Yes",
+          onClick: () => handleSaveEdit(userId),
         },
         {
-          label: 'No',
-          onClick: () => toast.info("User not removed")
-        }
-      ]
+          label: "No",
+          onClick: () => toast.info("User not removed"),
+        },
+      ],
     });
   };
 
@@ -133,12 +137,22 @@ const RemoveUser = () => {
   };
 
   return (
-    <div className="container-fluid px-0 d-flex flex-column min-vh-100" style={{ backgroundColor: "rgba(232, 235, 231)" }}>
+    <div
+      className="container-fluid px-0 d-flex flex-column min-vh-100"
+      style={{ backgroundColor: "rgba(232, 235, 231)" }}
+    >
       <div className="row flex-grow-1 mx-0">
-        <div className={`col-13 col-md-3 px-0 position-relative`} style={{ transition: "all 0.3s" }}>
-        </div>
+        <div
+          className={`col-13 col-md-3 px-0 position-relative`}
+          style={{ transition: "all 0.3s" }}
+        ></div>
         <div className="col px-0 pb-2">
-          <div style={{ backgroundColor: "rgba(232, 235, 231)" , fontFamily: "Raleway" }}>
+          <div
+            style={{
+              backgroundColor: "rgba(232, 235, 231)",
+              fontFamily: "Raleway",
+            }}
+          >
             <div className="container">
               <h3 className="text-center pt-5 mb-4">
                 <b>Active Users</b>
@@ -274,9 +288,9 @@ const RemoveUser = () => {
               )}
             </div>
           </div>
-          <ToastContainer />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

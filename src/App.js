@@ -37,6 +37,7 @@ import LegalPage from './Pages/PostUpload/News/LegalPage';
 import SportsPage from './Pages/PostUpload/News/SportsPage';
 import ResetPassword from './Pages/User/ResetPassword';
 import Sidebar from './Components/Sidebar/Sidebar';
+import Settings from './Pages/AdminComponents/Settings';
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
                         <Route path='/adminProfile' element={<AdminProfile />} />
                         <Route path='/removeuser' element={<RemoveUser />} />
                         <Route path='/reset-password/:id/:token' element={<ResetPassword />} />
+                        <Route path='/settings' element={<Settings />} />
 
                         {/* About Dubai Menu */}
                         <Route path='/aboutdubaipage' element={<AboutDubaiPage />} />

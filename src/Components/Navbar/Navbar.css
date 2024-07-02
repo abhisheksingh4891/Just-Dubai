@@ -1,28 +1,29 @@
-.no-hover:hover {
-    background-color: transparent !important; /* Ensure background remains transparent on hover */
-    color: rgb(11, 11, 11) !important; 
-    font-weight: 600;
-  }
+.navbar {
+  background: linear-gradient(180deg, #141e30, #243b55);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* Lower than sidebar to appear below */
+}
 
+body {
+  padding-top: 70px; /* Adjust padding for content below navbar */
+}
+
+.nav-link:hover {
+  background-color: transparent ;
+  color: rgb(11, 11, 11) !important; 
+}  
+
+.nav-item .nav-link:hover {
+  color: rgb(11, 11, 11) !important; 
+}  
  
 .change3 :hover{
   background-color: #465492 ;
   color: rgb(243, 244, 246) !important; 
   font-weight: 600;
-  /* width:100% */
-}
-
-/* Navbar.css */
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1050;
-}
-
-body {
-  padding-top: 70px; /* Adjust this value based on the height of your navbar */
-}
+}  
 
 
 

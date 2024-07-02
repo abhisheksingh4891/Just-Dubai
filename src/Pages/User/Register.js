@@ -24,6 +24,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [designation, setDesignation] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("")
   const [empId, setEmpId] = useState("");
   const [image, setImage] = useState(null);
   const [superAdmin, setSuperAdmin] = useState(false);
@@ -35,25 +36,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    // const localPart = email.split("@")[0];
-
-    // if (!/^[a-zA-Z0-9]+$/.test(localPart)) {
-    //   toast.error("Email should contain only alphabets and numbers");
-    //   return;
-    // }
-
-    // if (empId.length !== 4) {
-    //   toast.error("Employee ID should be exactly 4 characters long");
-    //   return;
-    // }
-
-    // if (password.length < 8) {
-    //   toast.error("Password should be minimum 8 characters long");
-    //   return;
-    // }
-
     
     try {
       const formData = new FormData();
@@ -65,6 +47,7 @@ const Register = () => {
       formData.append("phone", phone);
       formData.append("designation", designation);
       formData.append("empId", empId);
+      formData.append("dateOfBirth", dateOfBirth);
       formData.append("superAdmin", superAdmin)
       
       const response = await axios.post(`${baseURL}/api/register`, formData, {
@@ -80,8 +63,10 @@ const Register = () => {
       }, 800);
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
+        toast.dismiss();
         toast.error(`${error.response.data.message}`);
       } else {
+        toast.dismiss();
         toast.error("Registration failed");
       }
       console.error("Registration Error:", error);
@@ -176,6 +161,19 @@ const Register = () => {
                           />
                         </div>
                       </div>
+                    </div>
+                    <div className="form-outline mb-4 text-start">
+                      <label className="form-label" htmlFor="dateofbirth">
+                        Date of birth
+                      </label>
+                      <input
+                        type="date"
+                        id="dateofbirth"
+                        value={dateOfBirth}
+                        onChange={(e) => setDateOfBirth(e.target.value)}
+                        className="form-control shadow-none"
+                        
+                      />
                     </div>
                     <div className="form-outline mb-4 text-start">
                       <label className="form-label" htmlFor="designation">

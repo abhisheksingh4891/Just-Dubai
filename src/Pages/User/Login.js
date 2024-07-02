@@ -1,48 +1,77 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-// const baseURL = "http://localhost:1000";
-const baseURL = "https://just-dubai-admin-backend.onrender.com";
+const baseURL = "http://localhost:1000";
 
 const Login = () => {
-  const { setAdminLogin } = useContext(AppContext);
+  const { setAdminLogin, setSuperAdminLogin } = useContext(AppContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [forgot, setForgot] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState(null);
-  
+  const [captchaValue, setCaptchaValue] = useState("");
+  const [generatedCaptcha, setGeneratedCaptcha] = useState("");
+
+  const generateRandomCaptcha = () => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    setGeneratedCaptcha(result);
+  };
+
+  useEffect(() => {
+    generateRandomCaptcha();
+    const interval = setInterval(() => {
+      generateRandomCaptcha();
+    }, 120000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-      // if (!captchaValue && email.length>2 && password.length>2) {
-      //   toast.error("Please complete the reCAPTCHA verification.");
-      //   return;
-      // }
-      if (email.length>=6 && password.length>=6) {
-        toast.info("Please Wait");
-      }
+    if (
+      captchaValue.toLowerCase() !== generatedCaptcha.toLowerCase() &&
+      email.length > 2 &&
+      password.length > 2
+    ) {
+      toast.dismiss();
+      toast.error("Incorrect CAPTCHA.Please complete verification.");
+      return;
+    }
+
+    if (email.length>=6 && password.length>=6) {
+      toast.info("Please Wait");
+    }
 
     try {
+      // toast.info("Please wait");
       const response = await axios.post(`${baseURL}/api/login`, {
         email,
         password,
-        captchaValue,
       });
+      toast.dismiss();
       toast.success(response.data.message);
-      // localStorage.setItem("admin", response.data.token);
-      Cookies.set("admin", response.data.token, { expires: 1 })
+
+      Cookies.set("admin", response.data.token, { expires: 1 });
+      Cookies.set("superadmin", response.data.superAdmin, { expires: 1 });
+
       setTimeout(() => {
+        setSuperAdminLogin(response.data.superAdmin);
         setAdminLogin(true);
       }, 1000);
     } catch (error) {
+      toast.dismiss();
       toast.error(
         error.response
           ? error.response.data.message
@@ -54,14 +83,17 @@ const Login = () => {
 
   const handleForget = async (e) => {
     e.preventDefault();
+    toast.dismiss();
     toast.info("Sending recovery email");
     try {
       await axios.post(`${baseURL}/api/users/forgotpassword`, {
         email,
       });
+      toast.dismiss();
       toast.success("Recovery email sent successfully");
       setForgot(!forgot);
     } catch (error) {
+      toast.dismiss();
       toast.error("Error sending recovery email");
     }
   };
@@ -77,7 +109,7 @@ const Login = () => {
         <div
           className="d-flex justify-content-center align-items-center text-center text-lg-start"
           style={{
-            backgroundColor: "#f4f5f7",
+            backgroundColor: "#EBF5FB",
             fontFamily: "Raleway",
             minHeight: "100vh",
           }}
@@ -92,12 +124,6 @@ const Login = () => {
                         <form onSubmit={handleForget}>
                           <h4 className="text-start">Forgot Password</h4>
                           <div className="form-outline mb-4 text-start pt-2">
-                            {/* <label
-                              className="form-label"
-                              htmlFor="form3Example30"
-                            >
-                              Email address
-                            </label> */}
                             <input
                               type="email"
                               id="form3Example30"
@@ -105,11 +131,10 @@ const Login = () => {
                               onChange={(e) => setEmail(e.target.value)}
                               className="form-control shadow-none"
                               placeholder="Enter your email here"
-                              
                             />
                           </div>
                           <p className="text-start">
-                            Enter your email to recieve reset password link.
+                            Enter your email to receive a reset password link.
                           </p>
 
                           <div className="text-start">
@@ -132,7 +157,6 @@ const Login = () => {
                     ) : (
                       <>
                         <form onSubmit={handleSubmit}>
-                          {/* <h3 className="text-start">Login Here</h3> */}
                           <div className="form-outline mb-4 text-start">
                             <label
                               className="form-label"
@@ -146,7 +170,6 @@ const Login = () => {
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               className="form-control shadow-none"
-                              
                             />
                           </div>
 
@@ -163,20 +186,44 @@ const Login = () => {
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                               className="form-control shadow-none"
-                              
                             />
+                          </div>
+
+                          <div className="form-outline mb-4 text-start">
+                            <label
+                              htmlFor="captcha"
+                              style={{
+                                border: "2px solid black",
+                                padding: "4px", // Adjust padding as needed
+                                fontSize: "20px",
+                                fontFamily: "Arial, sans-serif", // Example font family
+                                display: "inline-block",
+                                width: "140px", // Set fixed width for the captcha box
+                                textAlign: "center", // Center text horizontally
+                                letterSpacing: "4px", // Spread letters (adjust as needed)
+                              }}
+                            >
+                              {generatedCaptcha}
+                            </label>
+                            <div>
+                              <label>Please Verify You Are a Human</label>
+                            </div>
+
+                            <div className="d-flex align-items-center">
+                              <input
+                                type="text"
+                                id="captcha"
+                                value={captchaValue}
+                                onChange={(e) =>
+                                  setCaptchaValue(e.target.value)
+                                }
+                                className="fs-6"
+                                style={{ fontFamily: "Arial, sans-serif" }}
+                              />
+                            </div>
                           </div>
 
                           <div className="text-start mb-4">
-                            <ReCAPTCHA
-                              sitekey="6LewEwEqAAAAAPI5LkSy922omY0tKztZMYkLiq9l"
-                              onChange={(e) => setCaptchaValue(e)}
-                              className="mb-2"
-                            />
-                          <label className="mb-0">Please Verify You Are a Human</label>
-                          </div>
-
-                          <div className="text-start">
                             <button
                               type="submit"
                               className="btn btn-primary mb-4"

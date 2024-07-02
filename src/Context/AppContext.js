@@ -8,8 +8,8 @@ export const AppContext = createContext({});
 const AppContextProvider = (props) => {
     
     const navigate = useNavigate();
-
     const [adminLogin, setAdminLogin] = useState(false);
+    const [superAdminLogin, setSuperAdminLogin] = useState(false);
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
     const toggleSidebar = () => {
@@ -23,15 +23,23 @@ const AppContextProvider = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+        const isSuperAdmin = Cookies.get("superadmin");
+        if (isSuperAdmin==="true") {
+            setSuperAdminLogin(true)
+        }
+    }, []);
+
     const handleLogout = async () => {
         await Cookies.remove("admin");
+        Cookies.remove("superadmin")
         toast.error("User Logged Out");
         setTimeout(() => {
           setAdminLogin(false);
+          setSuperAdminLogin(false);
           navigate("/");
         }, 1000);
       };
-
 
     const contextValue = {
         adminLogin,
@@ -40,6 +48,7 @@ const AppContextProvider = (props) => {
         setIsSidebarVisible,
         toggleSidebar,
         handleLogout,
+        superAdminLogin, setSuperAdminLogin
         
     };
 
