@@ -13,8 +13,8 @@ import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { AppContext } from "../../Context/AppContext";
 
-const baseURL = "http://localhost:1000";
-// const baseURL = "https://just-dubai-admin-backend.onrender.com";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const AdminProfile = () => {
   const { superAdminLogin } = useContext(AppContext);

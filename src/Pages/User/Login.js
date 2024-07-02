@@ -5,7 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const baseURL = "http://localhost:1000";
+// const baseURL = "http://localhost:1000";
+const baseURL = "https://just-dubai-admin-backend.onrender.com";
 
 const Login = () => {
   const { setAdminLogin, setSuperAdminLogin } = useContext(AppContext);
