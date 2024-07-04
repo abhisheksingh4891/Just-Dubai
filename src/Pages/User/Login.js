@@ -4,6 +4,8 @@ import { AppContext } from "../../Context/AppContext";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // const baseURL = "http://localhost:1000";
 const baseURL = "https://just-dubai-admin-backend.onrender.com";
@@ -29,11 +31,15 @@ const Login = () => {
     setGeneratedCaptcha(result);
   };
 
+  const handleRefresh = () => {
+    generateRandomCaptcha();
+  }
+
   useEffect(() => {
     generateRandomCaptcha();
     const interval = setInterval(() => {
       generateRandomCaptcha();
-    }, 120000);
+    }, 180000);
 
     return () => clearInterval(interval);
   }, []);
@@ -42,7 +48,7 @@ const Login = () => {
     e.preventDefault();
 
     if (
-      captchaValue.toLowerCase() !== generatedCaptcha.toLowerCase() &&
+      captchaValue !== generatedCaptcha &&
       email.length > 2 &&
       password.length > 2
     ) {
@@ -51,7 +57,7 @@ const Login = () => {
       return;
     }
 
-    if (email.length>=6 && password.length>=6) {
+    if (email.length >= 6 && password.length >= 6) {
       toast.info("Please Wait");
     }
 
@@ -119,11 +125,11 @@ const Login = () => {
             <div className="row justify-content-center align-items-center">
               <div className="col-lg-6 col-md-8 col-sm-10 mb-5">
                 <div className="card">
-                  <div className="card-body py-4 px-md-5">
+                  <div className="card-body py-4 px-md-5 shadow-lg">
                     {forgot ? (
                       <>
                         <form onSubmit={handleForget}>
-                          <h4 className="text-start">Forgot Password</h4>
+                          <h4 className="text-start fs-5">Forgot Password</h4>
                           <div className="form-outline mb-4 text-start pt-2">
                             <input
                               type="email"
@@ -141,13 +147,13 @@ const Login = () => {
                           <div className="text-start">
                             <button
                               type="submit"
-                              className="btn btn-primary mb-4"
+                              className="btn btn-primary btn-sm mb-4"
                             >
                               Reset Password
                             </button>
                             <button
                               type="button"
-                              className="btn btn-secondary mb-4 ms-2"
+                              className="btn btn-secondary btn-sm mb-4 ms-2"
                               onClick={handleForgotPassword}
                             >
                               Cancel
@@ -163,7 +169,7 @@ const Login = () => {
                               className="form-label"
                               htmlFor="form3Example3"
                             >
-                              Email address
+                              Email Address
                             </label>
                             <input
                               type="email"
@@ -191,23 +197,26 @@ const Login = () => {
                           </div>
 
                           <div className="form-outline mb-4 text-start">
-                            <label
-                              htmlFor="captcha"
-                              style={{
-                                border: "2px solid black",
-                                padding: "4px", // Adjust padding as needed
-                                fontSize: "20px",
-                                fontFamily: "Arial, sans-serif", // Example font family
-                                display: "inline-block",
-                                width: "140px", // Set fixed width for the captcha box
-                                textAlign: "center", // Center text horizontally
-                                letterSpacing: "4px", // Spread letters (adjust as needed)
-                              }}
-                            >
-                              {generatedCaptcha}
-                            </label>
                             <div>
-                              <label>Please Verify You Are a Human</label>
+                              <label
+                                htmlFor="captcha"
+                                style={{
+                                  border: "2px solid black",
+                                  padding: "2px", 
+                                  fontSize: "16px",
+                                  fontFamily: "Arial, sans-serif", 
+                                  display: "inline-block",
+                                  width: "120px", 
+                                  textAlign: "center", 
+                                  letterSpacing: "4px", 
+                                }}
+                              >
+                                {generatedCaptcha}
+                              </label>
+                              <Link className="ms-2" onClick={handleRefresh}><FontAwesomeIcon icon={faArrowsRotate} /></Link>
+                            </div>
+                            <div>
+                              <label style={{fontSize:"14px"}}>Please Verify You Are a Human</label>
                             </div>
 
                             <div className="d-flex align-items-center">
@@ -218,7 +227,7 @@ const Login = () => {
                                 onChange={(e) =>
                                   setCaptchaValue(e.target.value)
                                 }
-                                className="fs-6"
+                                className="fs-6 px-2"
                                 style={{ fontFamily: "Arial, sans-serif" }}
                               />
                             </div>
@@ -227,7 +236,7 @@ const Login = () => {
                           <div className="text-start mb-4">
                             <button
                               type="submit"
-                              className="btn btn-primary mb-4"
+                              className="btn btn-primary"
                             >
                               Log in
                             </button>
@@ -247,8 +256,8 @@ const Login = () => {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </section>
-      <ToastContainer />
     </div>
   );
 };

@@ -49,6 +49,46 @@ const Sidebar = () => {
                 <h3 className="fs-5 text-start">Pages</h3>
               </div>
               <ul className="nav flex-column px-2">
+
+              {superAdminLogin ? (
+                  <li className="nav-item text-start ms-2">
+                    <div className="dropdown">
+                      <button
+                        className="btn w-100 text-start p-3 text-light border-0 dropdown-toggle shadow-none"
+                        type="button"
+                        id="dropdownsettingsButton"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Settings
+                      </button>
+                      <ul
+                        className="dropdown-menu w-100 border-0 shadow-lg"
+                        style={{ background: "linear-gradient(150deg, #141e30, #243b55)" }}
+                        aria-labelledby="dropdownsettingsButton"
+                      >
+                        <li className="nav-item text-start ms-1 px-2 itemhover">
+                          <Link
+                            to="/settings/generalsettings/siteinformation"
+                            className="dropdown-item text-light d-flex align-items-center gap-2 px-3 py-2"
+                          >
+                            General Settings
+                          </Link>
+                        </li>
+                        {/* <li className="nav-item text-start ms-1 px-2 itemhover">
+                          <Link
+                            to="/removeuser"
+                            className="dropdown-item text-light d-flex align-items-center gap-2 px-3 py-2"
+                          >
+                            Other settings
+                          </Link>
+                        </li> */}
+                      </ul>
+                    </div>
+                  </li>
+                ) : (
+                  <></>
+                )}
                 <li className="nav-item text-start ms-2">
                   <div className="dropdown">
                     <button

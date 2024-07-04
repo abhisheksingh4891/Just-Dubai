@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../../Components/Sidebar/Sidebar";
+// import Sidebar from "../../Components/Sidebar/Sidebar";
 import { ToastContainer } from "react-toastify";
 
 const AboutDubaiPage = () => {
   return (
     <>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <>
         <section
           className="pt-4"

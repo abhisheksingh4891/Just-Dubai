@@ -66,14 +66,6 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li className="change3 px-2">
-                      <Link
-                        to="/settings"
-                        className="dropdown-item  fw-bold rounded"
-                      >
-                        Settings
-                      </Link>
-                    </li>
-                    <li className="change3 px-2">
                       <div
                         className="dropdown-item fw-bold rounded"
                         onClick={handleLogout}

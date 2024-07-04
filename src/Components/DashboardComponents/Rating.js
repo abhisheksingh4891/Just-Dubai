@@ -10,7 +10,7 @@ const Rating = () => {
         <div className="card-header text-dark">
           <h5 className="card-title" style={{ fontFamily: "Raleway" }}>Rating</h5>
         </div>
-        <div className="card-body">
+        <div className="card-body" >
           <div className="row d-flex align-items-center justify-content-between mb-3">
             <div className="col-6 text-center">
               <h2 className="fw-light d-flex align-items-center justify-content-center m-0">
